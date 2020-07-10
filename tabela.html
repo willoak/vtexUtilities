@@ -1,0 +1,375 @@
+<!doctype html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>Gerar Planilha de Produto Vtex</title>
+
+    <link rel="stylesheet" href="bootstrap.css">
+
+    <style>
+        div#divTabela {
+            width: 100%;
+            overflow-y: hidden;
+            margin-top: 20px;
+            font-size: 12px;
+        }
+
+        .hide {
+            display: none;
+        }
+    </style>
+
+</head>
+
+<body>
+    <div class=" mb-3" style="border-bottom: 1px solid #E5E9EF;">
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <a class="navbar-brand" href="#">vtex utilities</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item active">
+                        <a class="nav-link" href="#">Criar produtos <span class="sr-only">(current)</span></a>
+                    </li>
+     
+                </ul>
+     
+            </div>
+        </nav>
+    </div>
+    <div class="container-fluid">
+
+        <div class="row">
+            <div class="col-md-2">
+                <div class="form-group">
+                    <label>_NomeProduto</label>
+                    <input type="text" class="form-control" id="_NomeSku" placeholder="Camiseta de bolinha">
+                </div>
+            </div>
+            <div class="col-md-2">
+                <div class="form-group">
+                    <label>_Altura</label>
+                    <input type="number" class="form-control" id="_Altura" value="" placeholder="4">
+                </div>
+            </div>
+            <div class="col-md-2">
+                <div class="form-group">
+                    <label>_Largura</label>
+                    <input type="number" class="form-control" id="_Largura" value="" placeholder="30">
+                </div>
+            </div>
+            <div class="col-md-2">
+                <div class="form-group">
+                    <label>_Comprimento</label>
+                    <input type="number" class="form-control" id="_Comprimento" value="" placeholder="40">
+                </div>
+            </div>
+            <div class="col-md-2">
+                <div class="form-group">
+                    <label>_Peso (gramas)</label>
+                    <input type="number" class="form-control" id="_Peso" value="" placeholder="200">
+                </div>
+            </div>
+            <div class="col-md-2">
+                <div class="form-group">
+                    <label>_Cor do produto</label>
+                    <input type="text" class="form-control" id="_CodigoReferenciaSKU" value="" placeholder="roxo">
+                </div>
+            </div>
+            <div class="col-md-2">
+                <div class="form-group">
+                    <label>_NomeSku</label>
+                    <input type="text" class="form-control" id="_NomeProduto" readonly placeholder="">
+                </div>
+            </div>
+            <div class="col-md-2">
+                <div class="form-group">
+                    <label>_CodigoReferenciaProduto</label>
+                    <input type="text" class="form-control" id="_CodigoReferenciaProduto" placeholder="HE300">
+                </div>
+            </div>
+            <div class="col-md-2">
+                <div class="form-group">
+                    <label>_TextoLink</label>
+                    <input type="text" class="form-control" id="_TextoLink" readonly placeholder="">
+                </div>
+            </div>
+            <div class="col-md-2">
+                <div class="form-group">
+                    <label>_DescricaoProduto</label>
+                    <input type="text" class="form-control" id="_DescricaoProduto" value="" placeholder="Escreva algo longo">
+                </div>
+            </div>
+            <div class="col-md-2">
+                <div class="form-group">
+                    <label>_MetaTagDescription (curta)</label>
+                    <input type="text" class="form-control" id="_MetaTagDescription" value="" placeholder="Escreva algo curto">
+                </div>
+            </div>
+            <div class="col-md-2">
+                <div class="form-group">
+                    <label>_IdDepartamento</label>
+                    <input type="number" class="form-control" id="_IdDepartamento" value="2" placeholder="2">
+                </div>
+            </div>
+            <div class="col-md-2">
+                <div class="form-group">
+                    <label>_NomeDepartamento (principal)</label>
+                    <input type="text" class="form-control" id="_NomeDepartamento" value="" placeholder="Feminino">
+                </div>
+            </div>
+            <div class="col-md-2">
+                <div class="form-group">
+                    <label>_IdCategoria</label>
+                    <input type="number" class="form-control" id="_IdCategoria" value="" placeholder="4">
+                </div>
+            </div>
+            <div class="col-md-2">
+                <div class="form-group">
+                    <label>_NomeCategoria (subcategoria)</label>
+                    <input type="text" class="form-control" id="_NomeCategoria" value="" placeholder="Camisetas">
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-6">
+                <input type="button" id="btnExport" class="btn btn-primary" value=" Adicionar produto" /> <span
+                    id="itens"></span>
+            </div>
+            <div class="col-md-6"><input type="button" id="btnExcel" class="btn btn-primary hide"
+                    value=" Gerar Excel" /></div>
+        </div>
+    </div>
+
+    <div id="divTabela">
+        <table class="table table-bordered">
+            <thead class="thead-dark">
+                <tr>
+                    <th>_SkuId (Não alterável)</th>
+                    <th>_NomeSku</th>
+                    <th>_AtivarSkuSePossível</th>
+                    <th>_SkuAtivo (Não alterável)</th>
+                    <th>_SkuEan</th>
+                    <th>_Altura</th>
+                    <th>_AlturaReal</th>
+                    <th>_Largura</th>
+                    <th>_LarguraReal</th>
+                    <th>_Comprimento</th>
+                    <th>_ComprimentoReal</th>
+                    <th>_Peso</th>
+                    <th>_PesoReal</th>
+                    <th>_UnidadeMedida</th>
+                    <th>_MultiplicadorUnidade</th>
+                    <th>_CodigoReferenciaSKU</th>
+                    <th>_ValorFidelidade</th>
+                    <th>_DataPrevisaoChegada</th>
+                    <th>_CodigoFabricante</th>
+                    <th>_IdProduto (Não alterável)</th>
+                    <th>_NomeProduto (Obrigatório)</th>
+                    <th>_NomeComplemento</th>
+                    <th>_ProdutoAtivo (Não alterável)</th>
+                    <th>_CodigoReferenciaProduto</th>
+                    <th>_ExibeNoSite</th>
+                    <th>_TextoLink (Não alterável)</th>
+                    <th>_DescricaoProduto</th>
+                    <th>_DataLancamentoProduto</th>
+                    <th>_PalavrasChave</th>
+                    <th>_TituloSite</th>
+                    <th>_MetaTagDescription</th>
+                    <th>_IdFornecedor</th>
+                    <th>_ExibeSemEstoque</th>
+                    <th>_Kit (Não alterável)</th>
+                    <th>_IdDepartamento (Não alterável)</th>
+                    <th>_NomeDepartamento</th>
+                    <th>_IdCategoria</th>
+                    <th>_NomeCategoria</th>
+                    <th>_IdMarca</th>
+                    <th>_Marca</th>
+                    <th>_PesoCubico</th>
+                    <th>_CondicaoComercial</th>
+                    <th>_CodigosLojas</th>
+                    <th>_Acessorios</th>
+                    <th>_Similares</th>
+                    <th>_Sugestoes</th>
+                    <th>_MostrarJunto</th>
+                    <th>_Anexos</th>
+                </tr>
+            </thead>
+            <tbody id="tb">
+
+            </tbody>
+
+        </table>
+    </div>
+
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+
+    <script>
+        $(document).ready(function () {
+
+            var _NomeSku = document.getElementById("_NomeSku"),
+                _Altura = document.getElementById("_Altura"),
+                _Largura = document.getElementById("_Largura"),
+                _Comprimento = document.getElementById("_Comprimento"),
+                _Peso = document.getElementById("_Peso"),
+                _CodigoReferenciaSKU = document.getElementById("_CodigoReferenciaSKU"),
+                _NomeProduto = document.getElementById("_NomeProduto"),
+                _CodigoReferenciaProduto = document.getElementById("_CodigoReferenciaProduto"),
+                _TextoLink = document.getElementById("_TextoLink"),
+                _DescricaoProduto = document.getElementById("_DescricaoProduto"),
+                _MetaTagDescription = document.getElementById("_MetaTagDescription"),
+                _IdDepartamento = document.getElementById("_IdDepartamento"),
+                _NomeDepartamento = document.getElementById("_NomeDepartamento"),
+                _IdCategoria = document.getElementById("_IdCategoria"),
+                _NomeCategoria = document.getElementById("_NomeCategoria"),
+                _cor = "",
+                _c = 0,
+                _itens = 1,
+                resultado = "";
+
+            function retornarUrl(_campo) {
+                var n = _campo.value.trim().toLowerCase();
+                n = n.replace("/", "");
+                n = n.replace("+", "");
+                n = n.replace("@", "");
+                n = n.replace(new RegExp('[ÁÀÂÃ]', 'gi'), 'a');
+                n = n.replace(new RegExp('[ÉÈÊ]', 'gi'), 'e');
+                n = n.replace(new RegExp('[ÍÌÎ]', 'gi'), 'i');
+                n = n.replace(new RegExp('[ÓÒÔÕ]', 'gi'), 'o');
+                n = n.replace(new RegExp('[ÚÙÛ]', 'gi'), 'u');
+                n = n.replace(new RegExp('[Ç]', 'gi'), 'c');
+                n = n.replace(/\s/g, "-");
+                return n;
+            }
+
+            function retonarReferenciaSku() {
+                return _CodigoReferenciaProduto.value.toUpperCase() + "-" + _CodigoReferenciaSKU.value;
+            }
+
+            function validaCampo() {
+                let campos = $('input');
+                let c = 0;
+                campos.each(function (i, val) {
+                    if (val.value == "") {
+                        $(this).addClass('alert alert-danger');
+                        c++;
+                    } else {
+                        $(this).removeClass('alert alert-danger');
+                    }
+                });
+                if (c > 0) {
+                    alert("preencha todos os campos");
+                    return false;
+                } else {
+                    return true;
+                }
+            }
+
+            $(_NomeSku).on('keyup', function () {
+                _NomeProduto.value = _NomeSku.value;
+                var r = retornarUrl(_NomeSku);
+                _TextoLink.value = r;
+            });
+
+            $("#btnExport").click(function () {
+                if (validaCampo() == false) return false;
+
+                $("#btnExcel").removeClass('hide');
+
+                var t = ["P", "M", "G", "GG"];
+
+                if (_c == 1) {
+                    _cor = "#eeeeee";
+                    _c = 0;
+                } else {
+                    _cor = "#ffffff";
+                    _c++;
+                }
+
+                for (let i = 0; i < t.length; i++) {
+                    resultado += `
+                        <tr style="background-color: ${_cor}">
+                            <td></td>
+                            <td>${_NomeSku.value + " " + _CodigoReferenciaSKU.value + " " + t[i]}</td>
+                            <td>SIM</td>
+                            <td>SIM</td>
+                            <td></td>
+                            <td>${_Altura.value}</td>
+                            <td></td>
+                            <td>${_Largura.value}</td>
+                            <td></td>
+                            <td>${_Comprimento.value}</td>
+                            <td></td>
+                            <td>0,${_Peso.value}</td>
+                            <td></td>
+                            <td>un</td>
+                            <td>1,000000</td>
+                            <td>${ retonarReferenciaSku() + '-' + t[i] }</td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td>${_NomeProduto.value}</td>
+                            <td></td>
+                            <td>SIM</td>
+                            <td>${_CodigoReferenciaProduto.value.toUpperCase()}</td>
+                            <td>SIM</td>
+                            <td>${_TextoLink.value}</td>
+                            <td>${_DescricaoProduto.value}</td>
+                            <td>07/07/2020</td>
+                            <td>${_NomeProduto.value}</td>
+                            <td>${_NomeProduto.value}</td>
+                            <td>${_MetaTagDescription.value}</td>
+                            <td></td>
+                            <td>NÃO</td>
+                            <td>NÃO</td>
+                            <td>${_IdDepartamento.value}</td>
+                            <td>${_NomeDepartamento.value}</td>
+                            <td>${_IdCategoria.value}</td>
+                            <td>${_NomeCategoria.value}</td>
+                            <td>2000001</td>
+                            <td>HEAD</td>
+                            <td>1,000000</td>
+                            <td>Padrão</td>
+                            <td>1</td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                   `;
+                }
+                $("#tb").html(resultado);
+
+                $("#itens").html("Itens adicionados " + _itens++);
+
+                alert('Item adicionado');
+            });
+
+            $("#btnExcel").click(function (e) {
+                e.preventDefault();
+                var table_div = document.getElementById('divTabela');
+                // esse "\ufeff" é importante para manter os acentos         
+                var blobData = new Blob(['\ufeff' + table_div.outerHTML], {
+                    type: 'application/vnd.ms-excel'
+                });
+                var url = window.URL.createObjectURL(blobData);
+                var a = document.createElement('a');
+                a.href = url;
+                a.download = 'produtos'
+                a.click();
+            });
+        });
+    </script>
+</body>
+
+</html>
