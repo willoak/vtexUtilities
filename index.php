@@ -1,49 +1,20 @@
-<!doctype html>
-<html>
+<?php include('inc/include.php');?>
 
-<head>
-    <meta charset="utf-8">
-    <title>Gerar Planilha de Produto Vtex</title>
-
-    <link rel="stylesheet" href="bootstrap.css">
-
-    <style>
-        div#divTabela {
-            width: 100%;
-            overflow-y: hidden;
-            margin-top: 20px;
-            font-size: 12px;
-        }
-
-        .hide {
-            display: none;
-        }
-    </style>
-
-</head>
-
-<body>
-    <div class=" mb-3" style="border-bottom: 1px solid #E5E9EF;">
-        <nav class="navbar navbar-expand-lg navbar-light bg-light">
-            <a class="navbar-brand" href="#">vtex utilities</a>
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
-                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-
-            <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                <ul class="navbar-nav mr-auto">
-                    <li class="nav-item active">
-                        <a class="nav-link" href="#">Criar produtos <span class="sr-only">(current)</span></a>
-                    </li>
-     
-                </ul>
-     
-            </div>
-        </nav>
-    </div>
     <div class="container-fluid">
 
+        <div class="row">
+            <div class="col-md-4 mb-3">
+                <h3>Add novos produtos</h3>
+                <p>
+                    Preencha os campos abaixo para criar um novo produto com skus
+                </p>
+            </div>
+            <div class="col-md-8">
+                <label>Digite o tipo de grade do seu produto separado por vírgula. (ex: P,M,G,GG | 6,8,10,12)</label>
+                <input type="text" class="form-control" id="_grade" placeholder="" value="teste">
+            </div> 
+
+        </div>
         <div class="row">
             <div class="col-md-2">
                 <div class="form-group">
@@ -54,19 +25,19 @@
             <div class="col-md-2">
                 <div class="form-group">
                     <label>_Altura</label>
-                    <input type="number" class="form-control" id="_Altura" value="" placeholder="4">
+                    <input type="number" class="form-control" id="_Altura" value="4" placeholder="4">
                 </div>
             </div>
             <div class="col-md-2">
                 <div class="form-group">
                     <label>_Largura</label>
-                    <input type="number" class="form-control" id="_Largura" value="" placeholder="30">
+                    <input type="number" class="form-control" id="_Largura" value="30" placeholder="30">
                 </div>
             </div>
             <div class="col-md-2">
                 <div class="form-group">
                     <label>_Comprimento</label>
-                    <input type="number" class="form-control" id="_Comprimento" value="" placeholder="40">
+                    <input type="number" class="form-control" id="_Comprimento" value="40" placeholder="40">
                 </div>
             </div>
             <div class="col-md-2">
@@ -114,7 +85,7 @@
             <div class="col-md-2">
                 <div class="form-group">
                     <label>_IdDepartamento</label>
-                    <input type="number" class="form-control" id="_IdDepartamento" value="2" placeholder="2">
+                    <input type="number" class="form-control" id="_IdDepartamento" value="" placeholder="2">
                 </div>
             </div>
             <div class="col-md-2">
@@ -139,15 +110,14 @@
 
         <div class="row">
             <div class="col-md-6">
-                <input type="button" id="btnExport" class="btn btn-primary" value=" Adicionar produto" /> <span
-                    id="itens"></span>
+                <input type="button" id="btnExport" class="btn btn-primary" value="Adicionar produto" data-toggle="modal" data-target="#staticBackdrop" /> 
+                <span id="itens"></span>
             </div>
-            <div class="col-md-6"><input type="button" id="btnExcel" class="btn btn-primary hide"
-                    value=" Gerar Excel" /></div>
+            <div class="col-md-6"></div>
         </div>
     </div>
 
-    <div id="divTabela">
+    <div id="divTabela" class="">
         <table class="table table-bordered">
             <thead class="thead-dark">
                 <tr>
@@ -202,11 +172,39 @@
                 </tr>
             </thead>
             <tbody id="tb">
-
             </tbody>
-
         </table>
     </div>
+
+    <div id="divTabela2">
+        <table id="tb2" class="table table-bordered"></table>
+    </div>
+
+<!-- Modal -->
+<div class="modal fade" id="staticBackdrop" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="staticBackdropLabel">Produto adicionado</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <p><strong>Instruções</strong></p>
+        <p><strong>Ao exportar o arquivo será necessário salvá-lo novamente no formato excel 97-2003.xls</strong></p>
+        <p>Abra o arquivo. Clique em sim para a mensagem que irá aparecer. E siga o passo acima.</p>
+        <p>Deseja exportar os produtos?</p>
+
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Adicionar mais produtos</button>
+        <button type="button" id="btnExcel" class="btn btn-primary " value=" Gerar Excel">Exportar para excel</button>
+        <button type="button" id="btnExcel2" class="btn btn-primary " value=" Gerar Excel">Exportar para excel sku</button>
+      </div>
+    </div>
+  </div>
+</div>
 
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
@@ -233,7 +231,9 @@
                 _cor = "",
                 _c = 0,
                 _itens = 1,
-                resultado = "";
+                resultado   = "",
+                _grade = document.getElementById("_grade"),
+                resultado2  = "";
 
             function retornarUrl(_campo) {
                 var n = _campo.value.trim().toLowerCase();
@@ -282,9 +282,9 @@
             $("#btnExport").click(function () {
                 if (validaCampo() == false) return false;
 
-                $("#btnExcel").removeClass('hide');
-
                 var t = ["P", "M", "G", "GG"];
+
+                //var t = _grade.value.split(",");
 
                 if (_c == 1) {
                     _cor = "#eeeeee";
@@ -298,7 +298,7 @@
                     resultado += `
                         <tr style="background-color: ${_cor}">
                             <td></td>
-                            <td>${_NomeSku.value + " " + _CodigoReferenciaSKU.value + " " + t[i]}</td>
+                            <td>${retonarReferenciaSku() + "-" + t[i] + " " + _NomeSku.value}</td>
                             <td>SIM</td>
                             <td>SIM</td>
                             <td></td>
@@ -308,7 +308,7 @@
                             <td></td>
                             <td>${_Comprimento.value}</td>
                             <td></td>
-                            <td>0,${_Peso.value}</td>
+                            <td>${_Peso.value}</td>
                             <td></td>
                             <td>un</td>
                             <td>1,000000</td>
@@ -322,7 +322,7 @@
                             <td>SIM</td>
                             <td>${_CodigoReferenciaProduto.value.toUpperCase()}</td>
                             <td>SIM</td>
-                            <td>${_TextoLink.value}</td>
+                            <td>${_TextoLink.value + "-"+_CodigoReferenciaProduto.value.toLowerCase()}</td>
                             <td>${_DescricaoProduto.value}</td>
                             <td>07/07/2020</td>
                             <td>${_NomeProduto.value}</td>
@@ -348,11 +348,18 @@
                         </tr>
                    `;
                 }
+
+                for (let i = 0; i < t.length; i++) {
+                    resultado2 += `
+                        <tr><td>${_CodigoReferenciaSKU.value}</td></tr>
+                        <tr><td>${t[i]}</td></tr>
+                    `;
+                }
                 $("#tb").html(resultado);
+                $("#tb2").html(resultado2);
 
                 $("#itens").html("Itens adicionados " + _itens++);
 
-                alert('Item adicionado');
             });
 
             $("#btnExcel").click(function (e) {
@@ -368,6 +375,25 @@
                 a.download = 'produtos'
                 a.click();
             });
+
+            $("#btnExcel2").click(function(e){
+                e.preventDefault();
+                var table_div2 = document.getElementById('divTabela2');
+                // esse "\ufeff" é importante para manter os acentos         
+                var blobData2 = new Blob(['\ufeff' + table_div2.outerHTML], {
+                    type: 'application/vnd.ms-excel'
+                });
+                var url2 = window.URL.createObjectURL(blobData2);
+                var a2 = document.createElement('a');
+                a2.href = url2;
+                a2.download = 'produtossku'
+                a2.click();
+            })
+
+            $('#myModal').on('shown.bs.modal', function () {
+                $('#myInput').trigger('focus')
+            });
+
         });
     </script>
 </body>
